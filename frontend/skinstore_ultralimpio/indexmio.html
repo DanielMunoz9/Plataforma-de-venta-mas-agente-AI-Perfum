@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda Futurista</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .navbar {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .producto-img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s ease;
+    }
+
+    .producto-img:hover {
+      transform: scale(1.05);
+    }
+
+    .card-producto {
+      background: white;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s ease-in-out;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-producto:hover {
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .titulo {
+      font-weight: bold;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .btn-dark {
+      border-radius: 30px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+
+    .descripcion {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">HairTech</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Beneficios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Título principal -->
+  <h1 class="titulo">Tecnología Futurista para el Cuidado del Cabello</h1>
+
+  <!-- Grid de productos -->
+  <div class="container pb-5">
+    <div class="row g-4">
+      <!-- Secadora -->
+      <div class="col-md-4">
+        <div class="card card-producto p-3 text-center">
+          <img src="img/secadora.png" alt="Secadora 3D" class="producto-img">
+          <h5 class="mt-3">Secadora de Pelo Pro Vortex</h5>
+          <p class="descripcion">
+            🌬️ Potente motor iónico que seca en la mitad del tiempo.  
+            <br><strong>Para uso personal:</strong> ligera, silenciosa y sin frizz.  
+            <br><strong>Para salones:</strong> velocidad profesional y diseño ergonómico para largas jornadas.
+          </p>
+          <a href="#" class="btn btn-dark">Comprar</a>
+        </div>
+      </div>
+
+      <!-- Plancha -->
+      <div class="col-md-4">
+        <div class="card card-producto p-3 text-center">
+          <img src="img/plancha.png" alt="Plancha 3D" class="producto-img">
+          <h5 class="mt-3">Plancha Ionic X Ceramic</h5>
+          <p class="descripcion">
+            🔥 Placas flotantes de cerámica 3D y control inteligente de temperatura.  
+            <br><strong>Personal:</strong> cabello liso sin maltratar.  
+            <br><strong>Salón:</strong> resultados profesionales en menos tiempo y sin daños.
+          </p>
+          <a href="#" class="btn btn-dark">Comprar</a>
+        </div>
+      </div>
+
+      <!-- Máquina de peluquear -->
+      <div class="col-md-4">
+        <div class="card card-producto p-3 text-center">
+          <img src="img/maquina.png" alt="Máquina 3D" class="producto-img">
+          <h5 class="mt-3">Máquina UltraCut 9000</h5>
+          <p class="descripcion">
+            ✂️ Motor silencioso, cuchillas autoafilables y pantalla digital.  
+            <br><strong>Uso personal:</strong> cortes precisos y cómodos en casa.  
+            <br><strong>Salón:</strong> diseño moderno y batería de alto rendimiento para todo el día.
+          </p>
+          <a href="#" class="btn btn-dark">Comprar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 HairTech | Diseñado para la nueva generación de estilistas. | <a href="#">Volver arriba</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio - LIZO Belleza</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}" />
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fc0101, #ff8e8e);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .spa-banner {
+      background-image: url('{{ url_for('static', filename='img/secadorportada.jpg') }}');
+      background-size: cover;
+      background-position: center;
+      height: 50vh;
+      border-radius: 12px;
+      position: relative;
+      color: white;
+    }
+
+    .spa-banner .overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 100%;
+      width: 100%;
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .categoria-card img {
+      max-height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .categoria-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-title {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .btn-outline-dark:hover {
+      background-color: #c9e1df;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('html_views.index') }}">LIZO Belleza</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.catalogo') }}">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.carrito') }}">Carrito</a></li>
+          {% if not session.get('user_id') %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.login') }}">Iniciar sesión</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.register') }}">Registrarse</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.logout') }}">Salir</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container my-5">
+
+    <!-- Banner tipo SPA -->
+    <div class="spa-banner mb-5 shadow">
+      <div class="overlay text-center">
+        <h1 class="display-5 fw-bold">Bienvenido a LIZO Belleza</h1>
+        <p class="lead">Donde tu cuidado personal es nuestra pasión</p>
+        <a href="{{ url_for('html_views.catalogo') }}" class="btn btn-light btn-lg mt-3">Explorar Catálogo</a>
+      </div>
+    </div>
+
+    <!-- Sección de Categorías -->
+    <h3 class="text-center mb-4">Categorías Destacadas</h3>
+
+    <div class="row g-4">
+      {% set categorias = [
+        {'nombre': 'secadoras', 'img': 'secadorportada.jpg'},
+        {'nombre': 'planchas', 'img': 'planchaportada.jpg'},
+        {'nombre': 'pinzas', 'img': 'pinzasPortada.jpg'},
+        {'nombre': 'patilleras', 'img': 'patilleraPortada.jpg'},
+        {'nombre': 'cepillos', 'img': 'cepilloPortada.jpg'},
+        {'nombre': 'tijeras', 'img': 'tijerasPortada.jpg'},
+        {'nombre': 'barbera', 'img': 'barberaPortada.jpg'},
+        {'nombre': 'spa', 'img': 'espa y belleza Portada.jpg'},
+        {'nombre': 'otros', 'img': 'OtrosPortada.jpg'}
+      ] %}
+
+      {% for cat in categorias %}
+      <div class="col-md-4 col-sm-6">
+        <div class="card border-0 shadow-sm h-100 categoria-card">
+          <img src="{{ url_for('static', filename='img/' ~ cat.img) }}" class="card-img-top rounded-top" alt="{{ cat.nombre }}">
+          <div class="card-body text-center">
+            <h5 class="card-title text-capitalize">{{ cat.nombre }}</h5>
+            <a href="{{ url_for('html_views.categoria', nombre=cat.nombre) }}" class="btn btn-outline-dark btn-sm">Ver más</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </main>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
