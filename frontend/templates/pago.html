@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Pago{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Resumen de la Orden</h2>
+  <p><strong>Destinatario:</strong> {{ orden.nombre_destinatario }}</p>
+  <p><strong>Dirección:</strong> {{ orden.direccion_envio }}</p>
+  <p><strong>Ciudad:</strong> {{ orden.ciudad_envio }}</p>
+  <p><strong>Total:</strong> ${{ "{:,.2f}".format(orden.total) }}</p>
+
+  <form action="{{ url_for('html_views.formulario_pago', id_orden=orden.id) }}" method="GET">
+    <input type="hidden" name="id_orden" value="{{ orden.id }}">
+    <button type="submit" class="btn btn-primary">Proceder al Pago</button>
+  </form>
+</div>
+{% endblock %}

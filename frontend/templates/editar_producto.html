@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Producto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+  <h2>Editar Producto</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" value="{{ producto.nombre }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" required>{{ producto.descripcion }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="{{ producto.precio }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input type="number" min="0" class="form-control" id="stock" name="stock" value="{{ producto.stock }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="id_categoria" class="form-label">Categoría</label>
+      <select class="form-select" id="id_categoria" name="id_categoria" required>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" {% if cat.id == producto.id_categoria %}selected{% endif %}>
+            {{ cat.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if producto.imagen_blob %}
+      <div class="mb-3">
+        <label class="form-label">Imagen actual:</label><br>
+        <img src="data:image/png;base64,{{ producto.imagen_blob | b64encode }}" 
+             alt="Imagen actual"
+             class="img-thumbnail"
+             style="max-height: 200px;">
+      </div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label for="imagen" class="form-label">Cambiar imagen</label>
+      <input class="form-control" type="file" id="imagen" name="imagen" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{{ url_for('admin_producto_bp.ver_productos') }}" class="btn btn-secondary">Cancelar</a>
+  </form>
+  <form method="POST" enctype="multipart/form-data">
+  <!-- …otros campos… -->
+
+  <!-- selector de categoría -->
+  <div class="mb-3">
+    <label class="form-label">Categoría</label>
+    <select name="id_categoria" class="form-select" required>
+      {% for cat in categorias %}
+        <option value="{{ cat.id }}">{{ cat.nombre }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- nuevo campo para la portada de la categoría -->
+  <div class="mb-3">
+    <label class="form-label">Portada de la categoría (opcional)</label>
+    <input type="file"
+           name="portada_categoria"
+           class="form-control"
+           accept="image/*">
+    <div class="form-text">
+      Si subes aquí, esta imagen se guardará como portada de la categoría seleccionada.
+    </div>
+  </div>
+
+  <!-- botón único que envía TODO al servidor -->
+  <button type="submit" class="btn btn-primary">
+    💾 Guardar producto y portada de categoría
+  </button>
+</form>
+
+</body>
+</html>

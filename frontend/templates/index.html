@@ -3,125 +3,692 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inicio - LIZO Belleza</title>
+  <title>Lizo Belleza – Innovación en Belleza</title>
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}" />
+  <!-- Iconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+  <!-- Fondo animado y estilo elegante -->
   <style>
+    #testimonioss {
+      background: linear-gradient(-45deg, #f73af7, #f94380, #a0d4f9, #f4afff);
+      background-size: 400% 400%;
+      animation: fondoElegante 20s ease infinite;
+      color: #333;
+      min-height: 20vh;
+      border-radius: 30px;
+      margin: 30px;
+    }
+
+
     body {
-      background: linear-gradient(to bottom right, #fc0101, #ff8e8e);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(-45deg, #f73af7, #f94380, #a0d4f9, #f4afff);
+      background-size: 400% 400%;
+      animation: fondoElegante 20s ease infinite;
+      color: #333;
+      min-height: 100vh;
     }
 
-    .spa-banner {
-      background-image: url('{{ url_for('static', filename='img/secadorportada.jpg') }}');
-      background-size: cover;
-      background-position: center;
-      height: 50vh;
-      border-radius: 12px;
-      position: relative;
-      color: white;
+    @keyframes fondoElegante {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .spa-banner .overlay {
+    
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .card {
+      border-radius: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+      background-color: white;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .carousel-caption {
       background-color: rgba(0, 0, 0, 0.4);
-      height: 100%;
+      border-radius: 12px;
+    }
+
+    footer {
+      font-size: 0.95rem;
+    }
+
+    section {
+      scroll-margin-top: 100px;
+    }
+
+    /* Estilos para las animaciones curvas */
+    .curved-animation-container {
+      position: relative;
       width: 100%;
-      padding: 4rem;
+      max-width: 600px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .curved-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Estilos para el banner de Vane France */
+    .banner-vane-france {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .banner-vane-france img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+
+    .banner-vane-france .contenido-banner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      border-radius: 12px;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
     }
 
-    .categoria-card img {
-      max-height: 200px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+    .banner-vane-france h1 {
+      color: #fff;
+      font-size: 2.8rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 4px 16px #002395;
+      letter-spacing: 3px;
+      margin-bottom: 0.5rem;
     }
 
-    .categoria-card:hover img {
-      transform: scale(1.05);
+    .banner-vane-france p {
+      color: #fff;
+      font-size: 1.3rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 2px 8px #ed2939;
+      margin-bottom: 1.5rem;
     }
 
-    .card-title {
-      font-weight: bold;
-      color: #333;
+    .banner-vane-france a.btn {
+      background-color: #ed2939;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      transition: background-color 0.3s;
     }
 
-    .btn-outline-dark:hover {
-      background-color: #c9e1df;
-      color: #000;
+    .banner-vane-france a.btn:hover {
+      background-color: #d11a24;
     }
   </style>
+
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" />
 </head>
 <body>
 
-  <!-- Barra de navegación -->
+  <!-- Navbar con Mega‐Menú -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="{{ url_for('html_views.index') }}">LIZO Belleza</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.catalogo') }}">Catálogo</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.carrito') }}">Carrito</a></li>
-          {% if not session.get('user_id') %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.login') }}">Iniciar sesión</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.register') }}">Registrarse</a></li>
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand fs-3" href="#">LizoBelleza</a>
+
+    <!-- Botón para colapsar en móvil -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenido del menú -->
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+
+        <!-- Dropdown de Categorías -->
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorías
+          </a>
+          <ul class="dropdown-menu">
+            {% for cat in categorias %}
+              <li>
+                <a class="dropdown-item" href="{{ url_for('html_views.categoria', nombre=cat.nombre) }}">
+                  {{ cat.nombre }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+
+        <!-- Enlace a contacto -->
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="#">Contacto</a>
+        </li>
+
+        <!-- Botón de iniciar sesión -->
+        <li class="nav-item mx-2">
+          <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light">
+            Iniciar sesión
+          </a>
+        </li>
+
+        <!-- Carrito -->
+        <li class="nav-item mx-2 position-relative">
+          <a class="nav-link" href="{{ url_for('carrito_bp.ver_carrito') }}">
+            <i class="bi bi-cart fs-5"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ session.get('carrito')|length if session.get('carrito') else 0 }}
+            </span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Hero Carousel -->
+ <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% set banners = [
+      'imagenes de portada/secadores.jpg',
+      'imagenes de portada/planchas.jpg',
+      'imagenes de portada/tijeras.jpg',
+      'imagenes de portada/spa.jpg',
+      'imagenes de portada/pinzas.jpg',
+      'imagenes de portada/patilleras.jpg',
+      'imagenes de portada/otros.jpg',
+      'imagenes de portada/imagen de la tienda.jpg',
+      'imagenes de portada/cepillos.jpg',
+      'imagenes de portada/barberia.jpg'
+    ] %}
+
+    {% for banner in banners %}
+    <div class="carousel-item {% if loop.first %}active{% endif %}">
+      <img
+        src="{{ url_for('static', filename='img/' ~ banner) }}"
+        class="d-block w-100 hero-img"
+        alt="Banner {{ loop.index }}"
+      />
+      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+        <h2 class="display-4 fw-bold text-white">
+          {% if loop.index == 1 %}
+          Secadores Profesionales
+          {% elif loop.index == 2 %}
+          Planchas de Alta Gama
+          {% elif loop.index == 3 %}
+          Tijeras de Precisión
+          {% elif loop.index == 4 %}
+          Spa y Bienestar
+          {% elif loop.index == 5 %}
+          Pinzas de Alta Calidad
+          {% elif loop.index == 6 %}
+          Patilleras Premium
+          {% elif loop.index == 7 %}
+          Accesorios Variados
+          {% elif loop.index == 8 %}
+          ¡Bienvenidos a Nuestra Tienda!
+          {% elif loop.index == 9 %}
+          Cepillos Profesionales
+          {% elif loop.index == 10 %}
+          Servicios de Barbería
           {% else %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.logout') }}">Salir</a></li>
+          Productos Exclusivos
           {% endif %}
-        </ul>
+        </h2>
+        <p class="lead text-light">Hasta 30% de descuento por tiempo limitado</p>
+        <a href="#" class="btn btn-lg btn-warning fw-semibold shadow-sm">Ver Ofertas</a>
       </div>
     </div>
-  </nav>
+    {% endfor %}
+  </div>
 
-  <!-- Contenido principal -->
-  <main class="container my-5">
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
 
-    <!-- Banner tipo SPA -->
-    <div class="spa-banner mb-5 shadow">
-      <div class="overlay text-center">
-        <h1 class="display-5 fw-bold">Bienvenido a LIZO Belleza</h1>
-        <p class="lead">Donde tu cuidado personal es nuestra pasión</p>
-        <a href="{{ url_for('html_views.catalogo') }}" class="btn btn-light btn-lg mt-3">Explorar Catálogo</a>
+
+
+  <main class="container py-4" style="background:rgba(255,255,255,0.95);border-radius:18px;box-shadow:0 8px 32px #00239533;padding:2rem;margin-top:2rem;">
+  <h1 class="text-center" style="color:#002395;font-family:'Playfair Display',serif;text-shadow:0 2px 8px #ed293966;letter-spacing:2px;">Bienvenido a la Perfumería Francesa</h1>
+  <p class="text-center" style="color:#ed2939;font-size:1.2rem;font-family:'Playfair Display',serif;">Descubre fragancias exclusivas y productos de lujo inspirados en Francia.</p>
+
+    <!-- Banner principal para Vane France -->
+    <section class="banner-vane-france mb-5" style="width:100%;max-width:1200px;margin:auto;position:relative;">
+      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80" alt="Banner Vane France" style="width:100%;height:320px;object-fit:cover;border-radius:32px;box-shadow:0 8px 32px #00239533;">
+      <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+        <h1 style="color:#fff;font-size:2.8rem;font-family:'Playfair Display',serif;text-shadow:0 4px 16px #002395;letter-spacing:3px;">Vane France</h1>
+        <p style="color:#fff;font-size:1.3rem;font-family:'Playfair Display',serif;text-shadow:0 2px 8px #ed2939;">Perfumería de lujo, inspiración francesa</p>
+      </div>
+    </section>
+
+    <!-- Categorías Destacadas -->
+  <section class="mb-5">
+  <h3 class="mb-4 text-center">Explora por Categoría</h3>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+    <!-- Barbería -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/barberia.jpg') }}" class="card-img-top" alt="Barbería" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Barbería</h5>
+          <p class="card-text">Productos de barbería de alta calidad.</p>
+          <a href="/categoria/barberia" class="btn btn-primary">Ver productos</a>
+        </div>
       </div>
     </div>
 
-    <!-- Sección de Categorías -->
-    <h3 class="text-center mb-4">Categorías Destacadas</h3>
+    <!-- Cepillos -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/cepillos.jpg') }}" class="card-img-top" alt="Cepillos" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Cepillos</h5>
+          <p class="card-text">Variedad de cepillos para todo tipo de cabello.</p>
+          <a href="/categoria/cepillos" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
 
-    <div class="row g-4">
-      {% set categorias = [
-        {'nombre': 'secadoras', 'img': 'secadorportada.jpg'},
-        {'nombre': 'planchas', 'img': 'planchaportada.jpg'},
-        {'nombre': 'pinzas', 'img': 'pinzasPortada.jpg'},
-        {'nombre': 'patilleras', 'img': 'patilleraPortada.jpg'},
-        {'nombre': 'cepillos', 'img': 'cepilloPortada.jpg'},
-        {'nombre': 'tijeras', 'img': 'tijerasPortada.jpg'},
-        {'nombre': 'barbera', 'img': 'barberaPortada.jpg'},
-        {'nombre': 'spa', 'img': 'espa y belleza Portada.jpg'},
-        {'nombre': 'otros', 'img': 'OtrosPortada.jpg'}
-      ] %}
+    <!-- Secadores -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/secadores.jpg') }}" class="card-img-top" alt="Secadores" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Secadores</h5>
+          <p class="card-text">Secadores potentes y eficientes.</p>
+          <a href="/categoria/secadores" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
 
-      {% for cat in categorias %}
-      <div class="col-md-4 col-sm-6">
-        <div class="card border-0 shadow-sm h-100 categoria-card">
-          <img src="{{ url_for('static', filename='img/' ~ cat.img) }}" class="card-img-top rounded-top" alt="{{ cat.nombre }}">
-          <div class="card-body text-center">
-            <h5 class="card-title text-capitalize">{{ cat.nombre }}</h5>
-            <a href="{{ url_for('html_views.categoria', nombre=cat.nombre) }}" class="btn btn-outline-dark btn-sm">Ver más</a>
+    <!-- Planchas -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/planchas.jpg') }}" class="card-img-top" alt="Planchas" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Planchas</h5>
+          <p class="card-text">Planchas de última tecnología para alisar el cabello.</p>
+          <a href="/categoria/planchas" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patilleras -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/patilleras.jpg') }}" class="card-img-top" alt="Patilleras" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Patilleras</h5>
+          <p class="card-text">Patilleras precisas para cortes detallados.</p>
+          <a href="/categoria/patilleras" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pinzas -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/pinzas.jpg') }}" class="card-img-top" alt="Pinzas" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Pinzas</h5>
+          <p class="card-text">Pinzas profesionales para estilistas.</p>
+          <a href="/categoria/pinzas" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tijeras -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/tijeras.jpg') }}" class="card-img-top" alt="Tijeras" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Tijeras</h5>
+          <p class="card-text">Tijeras de precisión para cortes profesionales.</p>
+          <a href="/categoria/tijeras" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPA -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/spa.jpg') }}" class="card-img-top" alt="Spa" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Spa</h5>
+          <p class="card-text">Productos relajantes para el cuidado personal.</p>
+          <a href="/categoria/spa" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otros -->
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/imagenes de portada/otros.jpg') }}" class="card-img-top" alt="Otros" style="object-fit: cover; height: 200px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Otros</h5>
+          <p class="card-text">Otros productos de cuidado y belleza.</p>
+          <a href="/categoria/otros" class="btn btn-primary">Ver productos</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+   <!-- Productos Recomendados (Slider) -->
+<section class="mb-5">
+  <h3 class="mb-4 text-center">Productos Recomendados</h3>
+  <div id="prodCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for chunk in productos|batch(3, fill_with=None) %}
+      <div class="carousel-item {% if loop.first %}active{% endif %}">
+        <div class="row justify-content-center">
+          {% for producto in chunk %}
+          {% if producto %}
+          <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card h-100 shadow-sm">
+              {% if producto.imagen_base64 %}
+              <img src="data:image/jpeg;base64,{{ producto.imagen_base64 }}"
+                   class="card-img-top"
+                   style="height: 200px; object-fit: contain;"
+                   alt="{{ producto.nombre }}">
+              {% else %}
+              <img src="{{ url_for('static', filename='img/placeholder.jpg') }}"
+                   class="card-img-top"
+                   style="height: 200px; object-fit: contain;"
+                   alt="Sin imagen">
+              {% endif %}
+              <div class="card-body text-center d-flex flex-column justify-content-between" style="min-height: 200px;">
+                <div>
+                  <h5 class="card-title">{{ producto.nombre }}</h5>
+                  {% if producto.descripcion %}
+                  <p class="card-text">{{ producto.descripcion }}</p>
+                  {% endif %}
+                </div>
+                {% if producto.precio %}
+                <p class="card-text fw-bold text-success mt-auto">${{ producto.precio }}</p>
+                {% endif %}
+              </div>
+            </div>
           </div>
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
       {% endfor %}
     </div>
 
-  </main>
+    <!-- Controles -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#prodCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#prodCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</section>
 
-  <!-- Bootstrap Bundle -->
+
+
+
+    <!-- Video Demo -->
+    <section class="mb-5">
+  <h3 class="mb-4 text-center">Míralo en acción</h3>
+  <div class="ratio ratio-16x9 mx-auto" style="max-width: 800px;">
+    <video controls class="w-100 rounded">
+      <source src="{{ url_for('static', filename='img/Hailuo_Video_Video Script – _Lizo_ Your Bes_403147084686598144.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+
+    <!-- Testimonios -->
+    <!-- 🔹 Sección de Testimonios -->
+<section class="container my-5">
+  <h2 class="text-center mb-4">Lo que dicen nuestros clientes</h2>
+
+  {% if testimonios %}
+    <div id="carouselTestimonios" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for testimonio in testimonios %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <div class="d-flex justify-content-center">
+              <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="max-width: 500px;">
+                <div class="card-body text-center">
+                  <div class="mb-2">
+                    <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                  </div>
+                  <h5 class="card-title text-capitalize">{{ testimonio.nombre }}</h5>
+                  <p class="card-text fst-italic">"{{ testimonio.comentario }}"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Controles -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  {% else %}
+    <p class="text-center text-muted">No hay testimonios.</p>
+  {% endif %}
+</section>
+
+    <section id="testimonioss" class="mb-5 bg-white py-5">
+  <div class="container text-center">
+    <h4 class="mb-4">¿Quieres contarnos tu experiencia?</h4>
+    <button class="btn btn-outline-primary mb-3" onclick="mostrarFormulario()">
+      ✍️ Cuéntanos tu testimonio
+    </button>
+    <!-- FORMULARIO OCULTO -->
+    <div id="formularioTestimonio" style="display: none;">
+      <form action="{{ url_for('cliente_testimonio_bp.guardar_testimonio') }}" method="POST">
+        <input type="text" name="nombre" class="form-control mb-2" placeholder="Tu nombre" required>
+        <textarea name="comentario" class="form-control mb-2" placeholder="Tu testimonio" required></textarea>
+        <button type="submit" class="btn btn-primary">Enviar Testimonio</button>
+      </form>
+    </div>
+  </div>
+</section>
+</section>
+
+    <!-- Newsletter CTA -->
+    <section class="text-center py-5 bg-gradient" style="background: linear-gradient(to right, #007bff, #6610f2); color: white;">
+  <div class="container">
+    <h2 class="mb-3 fw-bold">🎁 ¡Regístrate y recibe beneficios exclusivos!</h2>
+    <p class="lead">Accede a descuentos, promociones anticipadas y mucho más solo por ser parte de nuestra comunidad.</p>
+
+    <div class="d-flex justify-content-center mt-4">
+      <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg px-4 py-2 shadow-sm rounded-pill d-flex align-items-center gap-2" style="transition: 0.3s;">
+        <i class="bi bi-person-plus-fill"></i>
+        <span class="fw-semibold">Crear cuenta gratuita</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer avanzado -->
+  <footer class="bg-dark text-white pt-5">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-4">
+          <h5>Lizo Belleza</h5>
+          <p>
+            Calle 123, Bogotá<br />
+            +57 300 123 4567<br />
+            contacto@lizobelleza.com
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h5>Enlaces Rápidos</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="link-light">Inicio</a></li>
+            <li><a href="#" class="link-light">Catálogo</a></li>
+            <li><a href="#" class="link-light">Ofertas</a></li>
+            <li><a href="#" class="link-light">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Síguenos</h5>
+          <a href="#" class="text-white fs-4 me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white fs-4 me-2"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white fs-4"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="text-center mt-4 pb-3">
+        &copy; {{ now.year }} Lizo Belleza. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS + tu JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+  <!-- ✅ GSAP Animaciones -->
+  <script>
+    
+      function mostrarFormulario() {
+    const formDiv = document.getElementById('formularioTestimonio');
+    formDiv.style.display = (formDiv.style.display === 'none') ? 'block' : 'none';
+  }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Navbar animación al cargar
+      gsap.from('.navbar', {
+        y: -80,
+        opacity: 0,
+        duration: 1,
+        ease: 'power4.out',
+      });
+
+      // Hero (primer carrusel activo)
+      gsap.from('.carousel-item.active .carousel-caption', {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: 'power2.out',
+        delay: 0.3,
+      });
+
+      // Secciones al hacer scroll
+      gsap.utils.toArray('section').forEach((sec) => {
+        gsap.from(sec, {
+          scrollTrigger: {
+            trigger: sec,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          opacity: 0,
+          y: 60,
+          duration: 1,
+          ease: 'power2.out',
+        });
+      });
+
+      // Tarjetas animadas individualmente
+      gsap.utils.toArray('.card').forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          ease: 'power1.out',
+        });
+
+        // Hover animado suave
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { scale: 1.03, duration: 0.3 });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { scale: 1.0, duration: 0.3 });
+        });
+      });
+
+      // Footer animación
+      gsap.from('footer', {
+        scrollTrigger: {
+          trigger: 'footer',
+          start: 'top bottom',
+        },
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: 'power2.out',
+      });
+    });
+  </script>
+
+  <!-- Espacio reservado para Agente AI de ventas y ayuda -->
+    <div id="agente-ai-placeholder" style="position:fixed;bottom:32px;right:32px;z-index:9999;width:380px;height:480px;background:rgba(255,255,255,0.95);border-radius:24px;box-shadow:0 8px 32px #00239533;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;color:#002395;">
+      <span style="font-size:1.2rem;">Aquí aparecerá tu Agente AI</span>
+    </div>
 </body>
 </html>

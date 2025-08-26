@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}Formulario de Pago{% endblock %}
+
+{% block content %}
+<h2>Pagar Orden #{{ orden.id }}</h2>
+<p>Total a pagar: ${{ "{:,.2f}".format(orden.total) }}</p>
+
+<form action="{{ url_for('payu.crear_pago') }}" method="POST">
+  <input type="hidden" name="id_orden" value="{{ orden.id }}">
+  <input type="hidden" name="valor" value="{{ orden.total }}">
+  <input type="hidden" name="descripcion" value="Pago de orden #{{ orden.id }}">
+
+  <div>
+    <label>Nombre completo</label>
+    <input type="text" name="nombre" required>
+  </div>
+  <div>
+    <label>Email</label>
+    <input type="email" name="email" required>
+  </div>
+  <div>
+    <label>Número de documento</label>
+    <input type="text" name="dni" required pattern="\d+">
+  </div>
+  <div>
+    <label>Teléfono</label>
+    <input type="text" name="telefono" required pattern="\d+">
+  </div>
+  <div>
+    <label>Dirección</label>
+    <input type="text" name="direccion" required>
+  </div>
+  <div>
+    <label>Ciudad</label>
+    <input type="text" name="ciudad" required>
+  </div>
+
+  <div>
+    <label>Método de pago</label>
+    <select id="metodoPago" name="paymentMethod" required onchange="mostrarCampos()">
+      <option value="" disabled selected>Seleccione</option>
+      <option value="VISA">Tarjeta VISA</option>
+      <option value="MASTERCARD">Tarjeta Mastercard</option>
+      <option value="AMEX">Tarjeta American Express</option>
+      <option value="PSE">PSE</option>
+      <option value="DAVIPLATA">Daviplata</option>
+      <option value="NEQUI">Nequi</option>
+    </select>
+  </div>
+
+  <!-- Tarjeta -->
+  <div id="tarjetaCampos" style="display:none; margin-top:10px;">
+    <div>
+      <label>Número de tarjeta</label>
+      <input type="text" name="numero" maxlength="19" pattern="\d{13,19}">
+    </div>
+    <div>
+      <label>CVV</label>
+      <input type="text" name="cvv" maxlength="4" pattern="\d{3,4}">
+    </div>
+    <div>
+      <label>Fecha de expiración (YYYY/MM)</label>
+      <input type="text" name="fecha" placeholder="2025/12" pattern="\d{4}/\d{2}">
+    </div>
+  </div>
+
+  <!-- PSE -->
+  <div id="pseCampos" style="display:none; margin-top:10px;">
+    <div>
+      <label>Banco</label>
+      <select name="banco_pse">
+        <option value="">Seleccione su banco</option>
+        <option value="BANCOLOMBIA">Bancolombia</option>
+        <option value="BBVA">BBVA</option>
+        <option value="DAVIVIENDA">Davivienda</option>
+        <option value="BANCOBOGOTA">Banco de Bogotá</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Billeteras -->
+  <div id="billeterasCampos" style="display:none; margin-top:10px;">
+    <p>El pago con billetera digital se procesará según el proveedor.</p>
+  </div>
+
+  <button type="submit" style="margin-top: 20px;">Pagar</button>
+</form>
+
+<script>
+function mostrarCampos() {
+  const metodo = document.getElementById('metodoPago').value;
+  document.getElementById('tarjetaCampos').style.display = ['VISA', 'MASTERCARD', 'AMEX'].includes(metodo) ? 'block' : 'none';
+  document.getElementById('pseCampos').style.display = metodo === 'PSE' ? 'block' : 'none';
+  document.getElementById('billeterasCampos').style.display = ['DAVIPLATA', 'NEQUI'].includes(metodo) ? 'block' : 'none';
+}
+</script>
+{% endblock %}

@@ -9,6 +9,9 @@ from .carrito_producto import CarritoProducto  # Productos dentro de un carrito
 from .estado_orden_compra import EstadoOrdenCompra  # Posibles estados de una orden (pendiente, pagado, etc.)
 from .orden import Orden  # Modelo que representa una orden/compra realizada
 from .detalle_orden import DetalleOrden  # Detalle de cada producto incluido en una orden
+from .oferta import Oferta
+from .oferta_producto import OfertaProducto
+from .testimonio import Testimonio
 
 # Lista de todos los modelos exportables. Es opcional pero útil para importar desde fuera.
 __all__ = [
@@ -19,5 +22,8 @@ __all__ = [
     'CarritoProducto',
     'EstadoOrdenCompra',
     'Orden',
-    'DetalleOrden'
+    'DetalleOrden',
+    'Oferta',
+    'OfertaProducto'
+    'Testimonio'
 ]

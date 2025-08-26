@@ -4,20 +4,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Tienda LIZO{% endblock %}</title>
+  <title>{% block title %}Vane France{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+  {% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+  {% endblock %}
   <style>
-    .navbar .nav-link:hover {
-      color: #ff4081 !important;
-      transition: 0.3s;
+    body {
+      background: linear-gradient(135deg, #002395 0%, #fff 50%, #ed2939 100%);
+      font-family: 'Playfair Display', serif;
+      color: #222;
+    }
+    .navbar {
+      background: linear-gradient(90deg, #002395 60%, #ed2939 100%) !important;
+      box-shadow: 0 8px 32px #00239533;
+    }
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #ed2939 !important;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #00239566;
+    }
+    .nav-link {
+      color: #fff !important;
+      font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      transition: color 0.3s;
+    }
+    .nav-link:hover {
+      color: #ed2939 !important;
+      text-shadow: 0 2px 8px #00239566;
+    }
+    .badge {
+      background: #ed2939 !important;
+      color: #fff !important;
+      box-shadow: 0 2px 8px #00239566;
+    }
+    main.container {
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #00239533;
+      padding: 2rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="{{ url_for('html_views.index') }}">LIZO Store</a>
+      <a class="navbar-brand fw-bold" href="{{ url_for('html_views.index') }}">Vane France</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,11 +70,20 @@
           {% endfor %}
           <!-- Login / Logout -->
           {% if not session.get('user_id') %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.login') }}">Iniciar sesión</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.register') }}">Registrarse</a></li>
+            <a class="nav-link" href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Registrarse</a></li>
+
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('html_views.logout') }}">Salir</a></li>
           {% endif %}
+          <li class="nav-item mx-2 position-relative">
+            <a class="nav-link" href="{{ url_for('carrito_bp.ver_carrito') }}">
+              <i class="bi bi-cart fs-5"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ session.get('carrito')|length if session.get('carrito') else 0 }}
+              </span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -47,6 +95,10 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+  {% block scripts %}
+  <script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+  {% endblock %}
+
 </body>
 </html>
 

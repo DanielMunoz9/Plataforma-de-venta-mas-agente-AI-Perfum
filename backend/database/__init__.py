@@ -1,9 +1,8 @@
 # database/__init__.py
 
-from flask_migrate import Migrate
-from extensions import db  # db viene desde extensions.py (ya configurado con SQLAlchemy)
+from extensions import db
 
-# Función para inicializar la base de datos y las migraciones
+# Esta función puede usarse solo si quieres crear tablas directamente sin migraciones
 def init_db(app):
-    db.init_app(app)       # Vincula SQLAlchemy con la app
-    Migrate(app, db)       # Habilita Flask-Migrate para manejar migraciones con Alembic
+    with app.app_context():
+        db.create_all()  # Solo para pruebas, no se usa si trabajas con flask-migrate

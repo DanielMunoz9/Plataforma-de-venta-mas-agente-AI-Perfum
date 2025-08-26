@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ producto.nombre }} - Detalle{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="row">
+    <div class="col-md-6 text-center position-relative">
+      <div class="position-relative overflow-hidden rounded shadow border" style="max-height: 500px;">
+        <img id="mainImage"
+             src="{{ url_for('admin_producto_bp.obtener_imagen_producto', id=producto.id) }}"
+             class="img-fluid"
+             alt="{{ producto.nombre }}"
+             style="width: 100%; object-fit: contain;">
+        <div id="zoomLens" class="zoom-lens"></div>
+      </div>
+      <div id="zoomResult" class="zoom-result border rounded shadow"></div>
+    </div>
+
+    <div class="col-md-6">
+      <h2>{{ producto.nombre }}</h2>
+      <p class="text-danger fw-bold fs-4">
+        $ {{ "{:,.0f}".format(producto.precio) }}
+      </p>
+      <p><strong>Stock:</strong> {{ producto.stock }}</p>
+
+      <h5>Características:</h5>
+      <ul class="list-unstyled">
+        {% for linea in producto.descripcion.split('•') if linea.strip() %}
+          <li class="mb-2">
+            <i class="fas fa-check-circle text-success me-2"></i>{{ linea.strip() }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <a href="{{ url_for('carrito_bp.agregar_carrito', id=producto.id) }}"
+         class="btn btn-success mt-3">
+         <i class="fas fa-cart-plus"></i> Agregar al carrito
+      </a>
+
+      <a href="{{ url_for('html_views.categoria', nombre=producto.categoria.nombre) }}"
+         class="btn btn-secondary mt-4 ms-2">
+         ← Volver a {{ producto.categoria.nombre }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Estilos para la lupa -->
+<style>
+  .zoom-lens {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #333;
+    background: rgba(255, 255, 255, 0.5);
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .zoom-result {
+    position: absolute;
+    top: 40px; /* ajusta según la altura de tu navbar/busqueda */
+    right: -450px; 
+    margin-left: auto;
+    width: 400px;
+    height: 400px;
+    margin-top: 20px;
+    display: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 200% 200%;
+  }
+</style>
+
+<!-- Script funcional de lupa -->
+<script>
+  const image = document.getElementById('mainImage');
+  const lens = document.getElementById('zoomLens');
+  const result = document.getElementById('zoomResult');
+
+  image.addEventListener('mousemove', moveLens);
+  lens.addEventListener('mousemove', moveLens);
+  image.addEventListener('mouseenter', () => {
+    lens.style.visibility = 'visible';
+    result.style.display = 'block';
+  });
+  image.addEventListener('mouseleave', () => {
+    lens.style.visibility = 'hidden';
+    result.style.display = 'none';
+  });
+
+  function moveLens(e) {
+    const rect = image.getBoundingClientRect();
+    const x = e.clientX - rect.left - lens.offsetWidth / 2;
+    const y = e.clientY - rect.top - lens.offsetHeight / 2;
+
+    const maxX = image.width - lens.offsetWidth;
+    const maxY = image.height - lens.offsetHeight;
+
+    const posX = Math.max(0, Math.min(x, maxX));
+    const posY = Math.max(0, Math.min(y, maxY));
+
+    lens.style.left = `${posX}px`;
+    lens.style.top = `${posY}px`;
+
+    const cx = result.offsetWidth / lens.offsetWidth;
+    const cy = result.offsetHeight / lens.offsetHeight;
+
+    result.style.backgroundImage = `url('${image.src}')`;
+    result.style.backgroundSize = `${image.width * cx}px ${image.height * cy}px`;
+    result.style.backgroundPosition = `-${posX * cx}px -${posY * cy}px`;
+  }
+</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+{% endblock %}

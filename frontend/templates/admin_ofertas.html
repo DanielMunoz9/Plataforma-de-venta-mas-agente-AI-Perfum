@@ -1,0 +1,37 @@
+<!-- templates/admin/ofertas/admin_ofertas.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Listado de Ofertas</h2>
+  <a href="{{ url_for('admin_oferta_bp.crear_oferta') }}" class="btn btn-success mb-3">Crear Nueva Oferta</a>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descuento (%)</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for oferta in ofertas %}
+      <tr>
+        <td>{{ oferta.id }}</td>
+        <td>{{ oferta.titulo }}</td>
+        <td>{{ oferta.descuento_porcentaje }}</td>
+        <td>{{ oferta.fecha_inicio }}</td>
+        <td>{{ oferta.fecha_fin }}</td>
+        <td>
+          <a href="{{ url_for('admin_oferta_bp.editar_oferta', id=oferta.id) }}" class="btn btn-primary btn-sm">Editar</a>
+          <form action="{{ url_for('admin_oferta_bp.eliminar_oferta', id=oferta.id) }}" method="POST" style="display:inline-block;">
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar esta oferta?')">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Finalizar compra{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Finalizar compra</h2>
+  <form method="POST">
+    <div class="mb-3">
+      <label>Nombre completo</label>
+      <input type="text" class="form-control" name="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label>Teléfono</label>
+      <input type="text" class="form-control" name="telefono" required>
+    </div>
+    <div class="mb-3">
+      <label>Teléfono alterno (opcional)</label>
+      <input type="text" class="form-control" name="telefono_alterno">
+    </div>
+    <div class="mb-3">
+      <label>Dirección de envío</label>
+      <input type="text" class="form-control" name="direccion" required>
+    </div>
+    <div class="mb-3">
+      <label>Ciudad</label>
+      <input type="text" class="form-control" name="ciudad" required>
+    </div>
+
+    <h5>Resumen del pedido</h5>
+    <ul class="list-group mb-3">
+      {% for item in carrito %}
+        <li class="list-group-item d-flex justify-content-between">
+          {{ item.nombre }} <span>${{ "{:,.2f}".format(item.precio) }}</span>
+        </li>
+      {% endfor %}
+      <li class="list-group-item d-flex justify-content-between fw-bold">
+        Total: <span>${{ "{:,.2f}".format(carrito | sum(attribute='precio')) }}</span>
+      </li>
+    </ul>
+
+    <button type="submit" class="btn btn-success">Confirmar pedido</button>
+  </form>
+</div>
+{% endblock %}

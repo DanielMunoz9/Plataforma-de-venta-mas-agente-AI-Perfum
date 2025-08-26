@@ -1,0 +1,103 @@
+/* --- PERFUMERÍA FRANCESA DE GAMA ALTA --- */
+body {
+  background: linear-gradient(135deg, #002395 0%, #fff 50%, #ed2939 100%);
+  font-family: 'Playfair Display', serif;
+  color: #222;
+}
+
+h1, h2, h3, h5 {
+  font-family: 'Playfair Display', serif;
+  color: #002395;
+  text-shadow: 0 2px 8px #ed293966;
+  letter-spacing: 2px;
+}
+
+.hero-img {
+  height: 75vh;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px #00239533;
+  border: 4px solid #ed2939;
+}
+
+.navbar .dropdown-menu {
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #002395 60%, #ed2939 100%);
+  color: #fff;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  color: #ed2939;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 8px #00239566;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+.bg-primary {
+  background: #002395 !important;
+  color: #fff !important;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #ed2939;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e0e0e0;
+  transition: 0.4s;
+  border-radius: 34px;
+  box-shadow: inset 6px 6px 10px #bebebe,
+              inset -6px -6px 10px #ffffff;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: #e0e0e0;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 6px 6px 10px #bebebe,
+              -6px -6px 10px #ffffff;
+}
+input:checked + .slider {
+  background: #76b852;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.img-portada {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #002395;
+  box-shadow: 0 2px 8px #ed293966;
+}
+/* --- FIN PERFUMERÍA FRANCESA --- */

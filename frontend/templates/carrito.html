@@ -3,11 +3,55 @@
 {% block title %}Carrito de compras{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Tu carrito</h2>
+<div class="container mt-5">
+  {% if productos and productos|length > 0 %}
+    <h2 class="mb-4">🛒 Tu carrito contiene {{ productos|length }} producto(s).</h2>
 
-<div class="alert alert-info">
-  Aún no tienes productos agregados.
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th style="width: 120px;">Imagen</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in productos %}
+        <tr>
+          <td>
+            <img src="{{ item.producto.imagen }}" alt="{{ item.producto.nombre }}" style="width: 100px; height: 100px; object-fit: contain;">
+          </td>
+          <td>{{ item.producto.nombre }}</td>
+          <td>${{ "{:,.2f}".format(item.producto.precio) }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>
+            <form action="{{ url_for('carrito_bp.eliminar_producto_carrito', id=item.producto.id) }}" method="POST">
+              <button class="btn btn-sm btn-danger">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-end">
+      <h4>Total: ${{ "{:,.2f}".format(total) }}</h4>
+      <a href="{{ url_for('orden_bp.checkout') }}" class="btn btn-success mt-3">Proceder al pago</a>
+      <a href="{{ url_for('carrito_bp.vaciar_carrito') }}" class="btn btn-outline-danger mt-3 ms-2">Vaciar carrito</a>
+    </div>
+  {% else %}
+    <h2 class="mb-4">Tu carrito</h2>
+    <div class="alert alert-info">
+      Aún no tienes productos agregados.
+    </div>
+    <a href="{{ url_for('html_views.catalogo') }}" class="btn btn-dark">Ir al catálogo</a>
+  {% endif %}
 </div>
 
-<a href="{{ url_for('html_views.catalogo') }}" class="btn btn-dark">Ir al catálogo</a>
+<!-- Espacio reservado para Agente AI de ventas y ayuda -->
+<div id="agente-ai-placeholder" style="position:fixed;bottom:32px;right:32px;z-index:9999;width:380px;height:480px;background:rgba(255,255,255,0.95);border-radius:24px;box-shadow:0 8px 32px #00239533;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;color:#002395;">
+  <span style="font-size:1.2rem;">Aquí aparecerá tu Agente AI</span>
+</div>
 {% endblock %}

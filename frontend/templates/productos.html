@@ -1,0 +1,132 @@
+{# frontend/templates/productos.html #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Productos</title>
+  <!-- Bootstrap 5 CSS y Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* Spinner centrado */
+    #spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    /* Fade-in para el contenido */
+    .fade {
+      opacity: 0;
+      transition: opacity .5s ease-in-out;
+    }
+    .fade.show {
+      opacity: 1;
+    }
+    /* Imagen miniatura en la tabla */
+    .img-thumb {
+      max-height: 60px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Spinner de carga -->
+  <div id="spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Contenedor principal oculto hasta carga -->
+  <div id="main-content" class="container mt-5 fade">
+    <h2 class="mb-4"><i class="bi bi-box-seam"></i> Productos Registrados</h2>
+
+    <div class="mb-3">
+      <a href="{{ url_for('admin_producto_bp.crear_producto') }}" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> Agregar producto
+      </a>
+      <a href="{{ url_for('admin_dashboard.dashboard_admin') }}" class="btn btn-secondary ms-2">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Imagen</th> <!-- Nueva columna para mostrar imagen -->
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if productos %}
+            {% for producto in productos %}
+            <tr>
+              <td>{{ producto.id }}</td>
+
+              <!-- 🔽 Imagen como base64 si existe -->
+              <td>
+                {% if producto.imagen_blob %}
+                  <img src="data:image/png;base64,{{ producto.imagen_blob | b64encode }}" alt="Imagen del producto" class="img-thumb">
+                {% else %}
+                  <span class="text-muted">Sin imagen</span>
+                {% endif %}
+              </td>
+
+              <td>{{ producto.nombre }}</td>
+              <td>${{ "{:,.2f}".format(producto.precio) }}</td>
+              <td>{{ producto.stock }}</td>
+              <td>{{ producto.categoria.nombre if producto.categoria else '—' }}</td>
+              <td class="text-end">
+                <a href="{{ url_for('admin_producto_bp.editar_producto', id=producto.id) }}"
+                   class="btn btn-sm btn-warning me-1" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
+                <form action="{{ url_for('admin_producto_bp.eliminar_producto', id=producto.id) }}"
+                      method="post" class="d-inline" 
+                      onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+                  <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" class="text-center">No hay productos registrados.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Espacio reservado para Agente AI de ventas y ayuda -->
+  <div id="agente-ai-placeholder" style="position:fixed;bottom:32px;right:32px;z-index:9999;width:380px;height:480px;background:rgba(255,255,255,0.95);border-radius:24px;box-shadow:0 8px 32px #00239533;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;color:#002395;">
+    <span style="font-size:1.2rem;">Aquí aparecerá tu Agente AI</span>
+  </div>
+
+  <!-- Bootstrap 5 JS y script de control de carga -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Cuando el DOM esté listo, ocultamos el spinner y mostramos el contenido con fade-in
+    document.addEventListener('DOMContentLoaded', () => {
+      const spinner = document.getElementById('spinner');
+      const main = document.getElementById('main-content');
+      // Pequeño timeout para que se note el spinner
+      setTimeout(() => {
+        spinner.style.display = 'none';
+        main.classList.add('show');
+      }, 300);
+    });
+  </script>
+</body>
+</html>

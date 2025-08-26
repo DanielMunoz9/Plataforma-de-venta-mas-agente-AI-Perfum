@@ -1,0 +1,106 @@
+/* carrito.css */
+
+/* --- PERFUMERÍA FRANCESA DE GAMA ALTA --- */
+body {
+  background: linear-gradient(135deg, #002395 0%, #fff 50%, #ed2939 100%);
+  font-family: 'Playfair Display', serif;
+  color: #222;
+}
+
+.table-carrito {
+  margin-top: 2rem;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.table-carrito thead {
+  background: linear-gradient(90deg, #002395 60%, #ed2939 100%);
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #2226;
+}
+
+.table-carrito tbody tr {
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.table-carrito tbody tr:hover {
+  background: #fff6f6;
+  box-shadow: 0 2px 12px #ed293966;
+}
+
+.table-carrito img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #002395;
+  box-shadow: 0 2px 8px #ed293966;
+}
+
+.btn-carrito {
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  background: linear-gradient(90deg, #002395 60%, #ed2939 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #00239566;
+  font-family: 'Playfair Display', serif;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-carrito:hover {
+  background: linear-gradient(90deg, #ed2939 60%, #002395 100%);
+  transform: scale(1.08);
+}
+
+.carrito-footer {
+  margin-top: 2rem;
+  text-align: right;
+  background: rgba(255,255,255,0.8);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #00239533;
+  padding: 1.2rem;
+}
+.carrito-footer h4 {
+  font-weight: bold;
+  color: #ed2939;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+.carrito-footer .btn {
+  min-width: 160px;
+  margin-left: 0.8rem;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #002395 60%, #ed2939 100%);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #ed293966;
+}
+
+.navbar .badge {
+  font-size: 0.85rem;
+  padding: 0.4em 0.7em;
+  background: #ed2939;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #00239566;
+}
+
+@media (max-width: 576px) {
+  .table-carrito img {
+    width: 60px;
+    height: 60px;
+  }
+  .btn-carrito {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.9rem;
+  }
+  .table-carrito {
+    border-radius: 8px;
+  }
+}
+
+/* --- FIN PERFUMERÍA FRANCESA --- */
