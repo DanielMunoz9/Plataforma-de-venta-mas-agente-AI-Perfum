@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from flask import Blueprint, request, jsonify, session, render_template
 
-# Crear blueprint para el agente AI
+# Crear blueprint para el agente AI simple
 ai_agent_bp = Blueprint('ai_agent', __name__, url_prefix='/api/ai')
 
 # Configuración de la personalidad de Amélie

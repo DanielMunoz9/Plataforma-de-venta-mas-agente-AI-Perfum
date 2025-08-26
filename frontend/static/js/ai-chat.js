@@ -1,24 +1,16 @@
 /**
- * Agente AI "Amélie" - Chat Widget
- * Sistema de chat con técnicas psicológicas de persuasión
+ * Agente AI "Amélie" - Chat Widget Simplificado
+ * Enfoque en funcionalidad básica y personalidad core
  */
 
 class AmelieChat {
     constructor() {
         this.sessionId = null;
         this.isOpen = false;
-        this.isTyping = false;
         this.conversationHistory = [];
-        this.inactivityTimer = null;
-        this.inactivityMessages = [
-            "¿Aún estás ahí, bella? 💫 Tengo algunas fragancias exclusivas que podrían interesarte...",
-            "No te vayas sin conocer nuestras ofertas especiales 🌹 Solo por hoy tenemos descuentos únicos...",
-            "¿Necesitas ayuda para decidir? Como experta, puedo guiarte hacia tu fragancia perfecta ✨",
-            "El tiempo corre... algunas de nuestras mejores fragancias se están agotando rápidamente 💎"
-        ];
         
         this.initializeChat();
-        this.setupInactivityTimer();
+        this.showWelcomeMessage();
     }
 
     initializeChat() {
@@ -27,11 +19,6 @@ class AmelieChat {
         
         // Configurar event listeners
         this.setupEventListeners();
-        
-        // Mostrar mensaje de bienvenida después de 3 segundos
-        setTimeout(() => {
-            this.showWelcomeMessage();
-        }, 3000);
     }
 
     createChatWidget() {
@@ -43,9 +30,10 @@ class AmelieChat {
                 <!-- Chat Button -->
                 <div id="chat-button" class="chat-button">
                     <div class="chat-avatar">💎</div>
+                    <span class="chat-text">Amélie</span>
                     <div class="chat-notification" id="chat-notification">
                         <div class="notification-dot"></div>
-                        <span class="notification-text">Amélie está aquí para ayudarte</span>
+                        <span class="notification-text">¡Hola! Soy Amélie 💎</span>
                     </div>
                 </div>
 
@@ -80,11 +68,11 @@ class AmelieChat {
                             <button class="quick-action-btn" data-message="Hola, necesito ayuda con perfumes">
                                 🌹 Ayuda con perfumes
                             </button>
-                            <button class="quick-action-btn" data-message="¿Qué me recomiendas para ocasiones especiales?">
-                                ✨ Ocasiones especiales
-                            </button>
                             <button class="quick-action-btn" data-message="¿Cuáles son sus precios?">
                                 💰 Ver precios
+                            </button>
+                            <button class="quick-action-btn" data-message="¿Qué me recomiendas?">
+                                ✨ Pedir recomendación
                             </button>
                         </div>
                         <div class="chat-input-wrapper">
@@ -136,13 +124,6 @@ class AmelieChat {
             btn.addEventListener('click', (e) => {
                 const message = e.target.getAttribute('data-message');
                 this.sendQuickMessage(message);
-            });
-        });
-
-        // Reset inactivity timer on user interaction
-        ['click', 'keypress', 'mousemove'].forEach(event => {
-            document.addEventListener(event, () => {
-                this.resetInactivityTimer();
             });
         });
     }
@@ -204,7 +185,7 @@ class AmelieChat {
             if (response.ok) {
                 // Hide typing and show response
                 this.hideTyping();
-                this.addMessage(data.response, 'agent', data.technique_used);
+                this.addMessage(data.response, 'agent');
                 this.sessionId = data.session_id;
 
                 // Update conversation history
@@ -215,23 +196,21 @@ class AmelieChat {
 
             } else {
                 this.hideTyping();
-                this.addMessage('Lo siento, tengo problemas técnicos. ¿Puedes intentar de nuevo?', 'agent', 'error');
+                this.addMessage('Lo siento, tengo problemas técnicos. ¿Puedes intentar de nuevo?', 'agent');
             }
 
         } catch (error) {
             console.error('Error sending message:', error);
             this.hideTyping();
-            this.addMessage('Disculpa, parece que hay un problema de conexión. Intenta de nuevo en un momento.', 'agent', 'error');
+            this.addMessage('Disculpa, parece que hay un problema de conexión. Intenta de nuevo en un momento.', 'agent');
         }
-
-        this.resetInactivityTimer();
     }
 
     sendQuickMessage(message) {
         this.sendMessage(message);
     }
 
-    addMessage(message, type, technique = null) {
+    addMessage(message, type) {
         const messagesContainer = document.getElementById('chat-messages');
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${type}-message`;
@@ -246,10 +225,7 @@ class AmelieChat {
                 <div class="message-avatar">💎</div>
                 <div class="message-content">
                     <div class="message-text">${message}</div>
-                    <div class="message-info">
-                        <span class="message-time">${timestamp}</span>
-                        ${technique ? `<span class="technique-tag">${this.getTechniqueLabel(technique)}</span>` : ''}
-                    </div>
+                    <div class="message-time">${timestamp}</div>
                 </div>
             `;
         } else {
@@ -270,29 +246,15 @@ class AmelieChat {
         }, 50);
     }
 
-    getTechniqueLabel(technique) {
-        const labels = {
-            'scarcity': '🔥 Limitado',
-            'urgency': '⏰ Urgente',
-            'social_proof': '⭐ Popular',
-            'reciprocity': '🎁 Especial',
-            'authority': '👑 Experta',
-            'emotional': '💝 Personal'
-        };
-        return labels[technique] || '✨ Conseil';
-    }
-
     showTyping() {
         const typingIndicator = document.getElementById('chat-typing');
         typingIndicator.style.display = 'flex';
-        this.isTyping = true;
         this.scrollToBottom();
     }
 
     hideTyping() {
         const typingIndicator = document.getElementById('chat-typing');
         typingIndicator.style.display = 'none';
-        this.isTyping = false;
     }
 
     hideQuickActions() {
@@ -310,9 +272,12 @@ class AmelieChat {
     }
 
     showWelcomeMessage() {
-        if (!this.isOpen && this.conversationHistory.length === 0) {
-            this.showNotification("¡Hola! Soy Amélie 💎 ¿Te ayudo a encontrar tu fragancia perfecta?");
-        }
+        // Mostrar notificación de bienvenida después de 3 segundos
+        setTimeout(() => {
+            if (!this.isOpen && this.conversationHistory.length === 0) {
+                this.showNotification("¿Te ayudo a encontrar tu fragancia perfecta?");
+            }
+        }, 3000);
     }
 
     showNotification(message) {
@@ -330,33 +295,6 @@ class AmelieChat {
                 notification.style.display = 'none';
             }, 300);
         }, 5000);
-    }
-
-    setupInactivityTimer() {
-        this.resetInactivityTimer();
-    }
-
-    resetInactivityTimer() {
-        if (this.inactivityTimer) {
-            clearTimeout(this.inactivityTimer);
-        }
-
-        // Show inactivity message after 30 seconds of no interaction
-        this.inactivityTimer = setTimeout(() => {
-            this.showInactivityMessage();
-        }, 30000);
-    }
-
-    showInactivityMessage() {
-        if (!this.isOpen && this.conversationHistory.length > 0) {
-            const randomMessage = this.inactivityMessages[
-                Math.floor(Math.random() * this.inactivityMessages.length)
-            ];
-            this.showNotification(randomMessage);
-        }
-        
-        // Reset timer for next inactivity message
-        this.resetInactivityTimer();
     }
 
     // Public methods for integration

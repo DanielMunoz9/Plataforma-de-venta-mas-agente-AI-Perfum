@@ -1,9 +1,20 @@
+#!/usr/bin/env python3
+"""
+Servidor mínimo para probar el chat de Amélie
+"""
+import os
+import sys
 import uuid
 from datetime import datetime
-from flask import Blueprint, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, render_template
 
-# Crear blueprint para el agente AI
-ai_agent_bp = Blueprint('ai_agent', __name__, url_prefix='/api/ai')
+# Configurar paths
+template_dir = os.path.abspath('frontend/templates')
+static_dir = os.path.abspath('frontend/static')
+
+# Crear aplicación Flask
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+app.secret_key = 'test-secret-key-for-amelie-chat'
 
 # Configuración de la personalidad de Amélie
 AMELIE_PERSONALITY = {
@@ -28,7 +39,6 @@ def get_session_id():
 def get_amelie_response(user_message):
     """
     Genera respuesta de Amélie con su personalidad distintiva
-    Versión simplificada sin base de datos
     """
     user_message_lower = user_message.lower()
     
@@ -56,9 +66,9 @@ def get_amelie_response(user_message):
     else:
         return f"Entiendo perfectamente, querida 💕 Como experta en fragancias de lujo, estoy aquí para cualquier duda que tengas. Las fragancias son mi pasión y me encanta compartir ese conocimiento contigo. ¿Hay algo específico sobre perfumes que te gustaría saber?"
 
-@ai_agent_bp.route('/chat', methods=['POST'])
+@app.route('/api/ai/chat', methods=['POST'])
 def chat():
-    """Endpoint principal para el chat con Amélie - versión simplificada"""
+    """Endpoint principal para el chat con Amélie"""
     try:
         data = request.get_json()
         user_message = data.get('message', '').strip()
@@ -82,17 +92,17 @@ def chat():
     except Exception as e:
         return jsonify({'error': f'Error interno: {str(e)}'}), 500
 
-@ai_agent_bp.route('/personality', methods=['GET'])
+@app.route('/api/ai/personality', methods=['GET'])
 def get_personality():
     """Obtiene información sobre la personalidad de Amélie"""
     return jsonify(AMELIE_PERSONALITY)
 
-@ai_agent_bp.route('/test', methods=['GET'])
+@app.route('/api/ai/test', methods=['GET'])
 def test_ai_widget():
     """Página de prueba para el widget AI"""
     return render_template('test_ai.html')
 
-@ai_agent_bp.route('/status', methods=['GET'])
+@app.route('/api/ai/status', methods=['GET'])
 def status():
     """Endpoint para verificar que el agente AI está funcionando"""
     return jsonify({
@@ -100,3 +110,19 @@ def status():
         'agent': AMELIE_PERSONALITY['name'],
         'message': 'Amélie está lista para ayudarte 💎'
     })
+
+@app.route('/')
+def index():
+    """Redirige a la página de prueba"""
+    return test_ai_widget()
+
+if __name__ == '__main__':
+    print("🚀 Iniciando servidor de prueba para Amélie...")
+    print("📍 Chat AI disponible en: http://127.0.0.1:5000/api/ai/test")
+    print("💎 ¡Amélie está lista para ayudarte!")
+    
+    app.run(
+        host='127.0.0.1',
+        port=5000,
+        debug=True
+    )
