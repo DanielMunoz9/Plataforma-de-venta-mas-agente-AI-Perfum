@@ -1,0 +1,38 @@
+<div id="amelie-box" style="max-width:520px;margin:16px auto;padding:12px;border:1px solid #eee;border-radius:10px">
+  <h3>Habla con Amélie 💎</h3>
+  <textarea id="amelie-input" rows="3" placeholder="Cuéntame para qué ocasión buscas tu perfume..." style="width:100%"></textarea>
+  <button id="amelie-send" style="margin-top:8px">Enviar</button>
+  <div id="amelie-reply" style="margin-top:12px;white-space:pre-wrap"></div>
+</div>
+<script>
+  // Define la URL de tu backend. En local, usa "http://127.0.0.1:8000"
+  window.AMELIE_BACKEND_URL = window.AMELIE_BACKEND_URL || "";
+
+  const btn = document.getElementById('amelie-send');
+  btn.addEventListener('click', async () => {
+    const input = document.getElementById('amelie-input');
+    const reply = document.getElementById('amelie-reply');
+    const text = input.value.trim();
+    if (!text) return;
+    reply.textContent = "Amélie está pensando… ✨";
+    try {
+      const base = window.AMELIE_BACKEND_URL || "";
+      const res = await fetch(`${base}/api/amelie`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      reply.textContent = data.reply || "Ups, intenta de nuevo.";
+    } catch (e) {
+      reply.textContent = "Error de conexión. Intenta más tarde.";
+    }
+  });
+
+  // Enviar con Ctrl/Cmd + Enter
+  document.getElementById('amelie-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      btn.click();
+    }
+  });
+</script>

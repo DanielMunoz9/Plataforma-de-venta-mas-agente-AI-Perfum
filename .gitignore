@@ -1,20 +1,9 @@
-.env
-.env
-env/
-venv/
-.venv/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.egg-info/
-*.log
-*.db
-*.sqlite
-*.sqlite3
+# OS
 .DS_Store
 Thumbs.db
-.vscode/
-.idea/
-models/
-checkpoints/
+
+# Python venv
+.venv/
+
+# Env files (never commit secrets)
+.env
