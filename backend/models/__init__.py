@@ -9,9 +9,12 @@ from .carrito_producto import CarritoProducto  # Productos dentro de un carrito
 from .estado_orden_compra import EstadoOrdenCompra  # Posibles estados de una orden (pendiente, pagado, etc.)
 from .orden import Orden  # Modelo que representa una orden/compra realizada
 from .detalle_orden import DetalleOrden  # Detalle de cada producto incluido en una orden
-from .oferta import Oferta
-from .oferta_producto import OfertaProducto
-from .testimonio import Testimonio
+from .categoria import Categoria  # Categorías de productos
+from .oferta import Oferta  # Ofertas y promociones
+from .oferta_producto import OfertaProducto  # Relación ofertas-productos
+from .testimonio import Testimonio  # Testimonios de clientes
+from .conversacion import Conversacion  # Conversaciones con el agente AI
+from .conversion_metrics import ConversionMetrics  # Métricas de conversión del AI
 
 # Lista de todos los modelos exportables. Es opcional pero útil para importar desde fuera.
 __all__ = [
@@ -23,7 +26,10 @@ __all__ = [
     'EstadoOrdenCompra',
     'Orden',
     'DetalleOrden',
+    'Categoria',
     'Oferta',
-    'OfertaProducto'
-    'Testimonio'
+    'OfertaProducto',
+    'Testimonio',
+    'Conversacion',
+    'ConversionMetrics'
 ]

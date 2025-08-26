@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Amélie AI Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ai-chat.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #f8b500 100%);
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
+        }
+        h1 {
+            color: #2c2c54;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .demo-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .demo-btn {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 Test de Amélie - Agente AI</h1>
+        
+        <div class="instructions">
+            <h3>Instrucciones de prueba:</h3>
+            <ol>
+                <li>El widget de Amélie debería aparecer en la esquina inferior derecha</li>
+                <li>Haz clic en el botón del chat para abrir la ventana</li>
+                <li>Prueba enviando mensajes para ver las respuestas con técnicas psicológicas</li>
+                <li>Observa las diferentes técnicas aplicadas (escasez, urgencia, etc.)</li>
+            </ol>
+        </div>
+
+        <div class="demo-buttons">
+            <button class="demo-btn" onclick="openAmelieChat()">🗨️ Abrir Chat</button>
+            <button class="demo-btn" onclick="askAmelie('Hola, necesito ayuda con perfumes')">🌹 Preguntar por perfumes</button>
+            <button class="demo-btn" onclick="askAmelie('¿Cuáles son sus precios?')">💰 Preguntar precios</button>
+            <button class="demo-btn" onclick="askAmelie('¿Qué me recomiendas?')">✨ Pedir recomendación</button>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #e3f2fd; border-radius: 12px;">
+            <h4>Estado del Widget:</h4>
+            <p id="widget-status">Iniciando...</p>
+        </div>
+    </div>
+
+    <!-- Agente AI Amélie Widget -->
+    <div id="agente-ai-placeholder">
+        <div style="display:flex;align-items:center;justify-content:center;font-family:'Arial',sans-serif;color:#666;padding:20px;">
+            <span>Cargando Amélie...</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/ai-chat.js') }}"></script>
+    
+    <script>
+        // Monitor when Amélie is ready
+        let checkCount = 0;
+        const checkInterval = setInterval(() => {
+            checkCount++;
+            const statusEl = document.getElementById('widget-status');
+            
+            if (typeof window.amelieChat !== 'undefined') {
+                statusEl.innerHTML = '✅ <strong>Amélie está lista!</strong> El widget AI se ha inicializado correctamente.';
+                statusEl.style.color = 'green';
+                clearInterval(checkInterval);
+            } else if (checkCount > 20) { // After 10 seconds
+                statusEl.innerHTML = '❌ <strong>Error:</strong> El widget AI no se ha inicializado. Revisa la consola para más detalles.';
+                statusEl.style.color = 'red';
+                clearInterval(checkInterval);
+            } else {
+                statusEl.innerHTML = `⏳ Esperando inicialización... (${checkCount}/20)`;
+                statusEl.style.color = 'orange';
+            }
+        }, 500);
+
+        // Fallback functions in case AI widget doesn't load
+        window.openAmelieChat = window.openAmelieChat || function() {
+            alert('El widget AI aún no está listo. Espera unos segundos e intenta de nuevo.');
+        };
+        
+        window.askAmelie = window.askAmelie || function(message) {
+            alert('El widget AI aún no está listo. Mensaje que querías enviar: "' + message + '"');
+        };
+    </script>
+</body>
+</html>

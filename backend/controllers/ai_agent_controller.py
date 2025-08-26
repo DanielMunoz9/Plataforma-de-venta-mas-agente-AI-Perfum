@@ -308,3 +308,9 @@ def get_session_metrics(session_id):
         
     except Exception as e:
         return jsonify({'error': f'Error al obtener métricas: {str(e)}'}), 500
+
+@ai_agent_bp.route('/test', methods=['GET'])
+def test_ai_widget():
+    """Página de prueba para el widget AI"""
+    from flask import render_template
+    return render_template('test_ai.html')

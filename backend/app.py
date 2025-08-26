@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from extensions import db, migrate, cors, login_manager
 from config import Config
 
-from database.seed import seed_data
+# from database.seed import seed_data  # Commented out for now
 from models.usuario import Usuario
 
 # Blueprints principales
@@ -92,5 +92,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    seed_data(app)
+    # seed_data(app)  # Commented out for now
     app.run(debug=True)
