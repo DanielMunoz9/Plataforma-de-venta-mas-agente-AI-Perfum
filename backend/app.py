@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from extensions import db, migrate, cors, login_manager
 from config import Config
 
-from database.seed import seed_data
+# from database.seed import seed_data  # Commented out for now
 from models.usuario import Usuario
 
 # Blueprints principales
@@ -30,6 +30,9 @@ from controllers.cliente_controller.testimonio_controller import cliente_testimo
 
 # ¡Importa aquí carrito_bp!
 from controllers.carrito_controller.carrito_controller import carrito_bp
+
+# AI Agent Blueprint
+from controllers.ai_agent_controller import ai_agent_bp
 
 # Plantillas y estáticos en frontend/
 template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../frontend/templates'))
@@ -71,6 +74,7 @@ def create_app():
     app.register_blueprint(admin_categoria_bp)
     app.register_blueprint(cliente_testimonio_bp)
     app.register_blueprint(carrito_bp)   # <— Aquí
+    app.register_blueprint(ai_agent_bp)  # <— AI Agent
     app.register_blueprint(orden_bp)
     app.register_blueprint(dashboard_bp)
 
@@ -88,5 +92,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    seed_data(app)
+    # seed_data(app)  # Commented out for now
     app.run(debug=True)
