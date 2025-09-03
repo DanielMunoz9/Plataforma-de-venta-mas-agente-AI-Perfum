@@ -7,6 +7,7 @@ import sys
 import uuid
 from datetime import datetime
 from flask import Flask, request, jsonify, session, render_template
+from flask_cors import CORS
 
 # Configurar paths
 template_dir = os.path.abspath('frontend/templates')
@@ -15,6 +16,9 @@ static_dir = os.path.abspath('frontend/static')
 # Crear aplicación Flask
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.secret_key = 'test-secret-key-for-amelie-chat'
+
+# Configurar CORS para permitir solicitudes desde WordPress
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Configuración de la personalidad de Amélie
 AMELIE_PERSONALITY = {
