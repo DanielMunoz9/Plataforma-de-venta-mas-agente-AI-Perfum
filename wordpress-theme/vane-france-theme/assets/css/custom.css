@@ -1,0 +1,404 @@
+/* 
+ * Vane France Theme Custom CSS
+ * Additional styles for the Vane France WordPress theme
+ */
+
+/* Enhanced Animations */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* Animation Classes */
+.animate-slide-left {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideInFromRight 0.8s ease-out;
+}
+
+.animate-slide-bottom {
+  animation: slideInFromBottom 0.6s ease-out;
+}
+
+.animate-rotate {
+  animation: rotateIn 1s ease-out;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.6s;
+  animation-fill-mode: both;
+}
+
+/* Enhanced Product Cards */
+.vf-product-enhanced {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.vf-product-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.7s;
+  z-index: 1;
+}
+
+.vf-product-enhanced:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Buttons */
+.btn-vf-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-vf-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-vf-glow:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Particle Background Effect */
+.vf-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vf-particle {
+  position: absolute;
+  background: rgba(237, 41, 57, 0.1);
+  border-radius: 50%;
+  animation: float-particle 20s infinite linear;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Typography */
+.vf-text-gradient {
+  background: linear-gradient(45deg, #002395, #ed2939);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vf-text-shadow-blue {
+  text-shadow: 0 2px 8px #00239566;
+}
+
+.vf-text-shadow-red {
+  text-shadow: 0 2px 8px #ed293966;
+}
+
+/* Enhanced Form Elements */
+.vf-form-floating {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.vf-form-floating input,
+.vf-form-floating textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.vf-form-floating input:focus,
+.vf-form-floating textarea:focus {
+  outline: none;
+  border-color: #002395;
+  box-shadow: 0 0 0 3px rgba(0, 35, 149, 0.1);
+}
+
+.vf-form-floating label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.vf-form-floating input:focus + label,
+.vf-form-floating input:not(:placeholder-shown) + label,
+.vf-form-floating textarea:focus + label,
+.vf-form-floating textarea:not(:placeholder-shown) + label {
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 0.8rem;
+  color: #002395;
+  background: white;
+  padding: 0 0.5rem;
+}
+
+/* Enhanced Loading States */
+.vf-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.vf-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Enhanced Cards */
+.vf-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.vf-card-3d:hover {
+  transform: rotateY(10deg) rotateX(5deg);
+}
+
+/* Glassmorphism Effect */
+.vf-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Scroll Indicators */
+.vf-scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, #002395, #ed2939);
+  z-index: 9999;
+  transition: width 0.3s;
+}
+
+/* Enhanced Modal Styles */
+.vf-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+}
+
+.vf-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Enhanced Navigation */
+.vf-nav-advanced .nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.vf-nav-advanced .nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: #ed2939;
+  transition: left 0.3s;
+}
+
+.vf-nav-advanced .nav-link:hover::before {
+  left: 0;
+}
+
+/* Mobile Responsive Enhancements */
+@media (max-width: 768px) {
+  .vf-card-3d:hover {
+    transform: none;
+  }
+  
+  .vf-particles {
+    display: none;
+  }
+  
+  .vf-modal-content {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .whatsapp-float,
+  .vf-particles,
+  .vf-scroll-indicator {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
+  .site-header,
+  .site-footer {
+    background: #002395 !important;
+    color: white !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .vf-glass {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #000;
+  }
+  
+  .btn-vf-primary,
+  .btn-vf-secondary {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .vf-particles {
+    display: none;
+  }
+}
