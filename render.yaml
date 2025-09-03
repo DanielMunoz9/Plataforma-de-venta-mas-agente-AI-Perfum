@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: amelie-ai
+    env: python
+    plan: free
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 -k gthread -b 0.0.0.0:$PORT test_amelie:app
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://lightslategrey-gorilla-972270.hostingersite.com
+      - key: AMELIE_NAME
+        value: Amélie
+      - key: AMELIE_GREETING
+        value: ¡Hola! Soy Amélie, tu consultora de fragancias de lujo. ¿Qué deseas explorar hoy?
+      - key: AMELIE_SECRET
+        generateValue: true
