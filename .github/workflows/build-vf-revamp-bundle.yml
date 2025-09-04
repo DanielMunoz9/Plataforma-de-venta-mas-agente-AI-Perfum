@@ -1,0 +1,74 @@
+name: Build VF Revamp bundle
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Zip vf-revamp-pages
+        id: pages
+        shell: bash
+        run: |
+          set -e
+          DIR="wp-content/plugins/vf-revamp-pages"
+          if [ -d "$DIR" ]; then
+            zip -r vf-revamp-pages.zip "$DIR" -x "*/.*" >/dev/null
+            echo "built=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "built=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload vf-revamp-pages
+        if: steps.pages.outputs.built == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-revamp-pages
+          path: vf-revamp-pages.zip
+          if-no-files-found: error
+
+      - name: Zip vf-revamp-customizer
+        id: customizer
+        shell: bash
+        run: |
+          set -e
+          DIR="wp-content/plugins/vf-revamp-customizer"
+          if [ -d "$DIR" ]; then
+            zip -r vf-revamp-customizer.zip "$DIR" -x "*/.*" >/dev/null
+            echo "built=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "built=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload vf-revamp-customizer
+        if: steps.customizer.outputs.built == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-revamp-customizer
+          path: vf-revamp-customizer.zip
+          if-no-files-found: error
+
+      - name: Zip vf-extras
+        id: extras
+        shell: bash
+        run: |
+          set -e
+          DIR="wp-content/plugins/vf-extras"
+          if [ -d "$DIR" ]; then
+            zip -r vf-extras.zip "$DIR" -x "*/.*" >/dev/null
+            echo "built=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "built=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload vf-extras
+        if: steps.extras.outputs.built == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vf-extras
+          path: vf-extras.zip
+          if-no-files-found: error
