@@ -1,15 +1,16 @@
 <?php
 /**
  * Plugin Name: VF Revamp Pages
- * Description: Page template pack for Vane France. Provides the "Plan Emprendedor" page template.
+ * Description: Paquete de plantillas para Vane France. Proporciona la plantilla de página "Plan Emprendedor".
  * Version: 1.0.0
  * Author: Daniel Munoz + Copilot
  * License: GPLv2 or later
+ * Text Domain: vf-revamp-pages
  */
 
 if (!defined('ABSPATH')) { exit; }
 
-// Define paths
+// Rutas del plugin
 if (!defined('VF_REVAMP_PAGES_PATH')) {
     define('VF_REVAMP_PAGES_PATH', plugin_dir_path(__FILE__));
 }
@@ -17,17 +18,16 @@ if (!defined('VF_REVAMP_PAGES_URL')) {
     define('VF_REVAMP_PAGES_URL', plugin_dir_url(__FILE__));
 }
 
-// Register page template from plugin
+// Registrar la plantilla de página desde el plugin (editores nuevos)
 add_filter('theme_page_templates', function ($templates, $theme, $post, $post_type) {
     if ($post_type !== 'page') {
         return $templates;
     }
-    // Key must be unique; for plugins, using a pseudo path is common
     $templates['vf-revamp-pages/vf-b2b.php'] = __('Plan Emprendedor', 'vf-revamp-pages');
     return $templates;
 }, 10, 4);
 
-// Support older WP versions where the filter signature differs
+// Compatibilidad con filtros antiguos
 add_filter('page_templates', function ($templates) {
     if (is_array($templates)) {
         $templates['vf-revamp-pages/vf-b2b.php'] = __('Plan Emprendedor', 'vf-revamp-pages');
@@ -35,7 +35,7 @@ add_filter('page_templates', function ($templates) {
     return $templates;
 });
 
-// Load the plugin template when selected on a page
+// Cargar la plantilla del plugin cuando esté seleccionada en la página
 add_filter('template_include', function ($template) {
     if (is_page()) {
         $page_id = get_queried_object_id();
@@ -50,13 +50,12 @@ add_filter('template_include', function ($template) {
     return $template;
 }, 99);
 
-// Clear page template cache so the template appears immediately in the editor
+// Limpiar caché de plantillas para que aparezca de inmediato en el editor
 function vf_revamp_pages_clear_cache() {
     if (function_exists('wp_get_theme')) {
-        $theme = wp_get_theme();
-        if (method_exists($theme, 'get_stylesheet')) {
-            $themes = wp_get_themes();
-            foreach ($themes as $name => $obj) {
+        $themes = wp_get_themes();
+        foreach ($themes as $obj) {
+            if (method_exists($obj, 'get_stylesheet')) {
                 $cache_key = 'page_templates-' . md5($obj->get_theme_root() . '/' . $obj->get_stylesheet());
                 wp_cache_delete($cache_key, 'themes');
             }
