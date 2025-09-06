@@ -1,4 +1,3 @@
-
 name: Build VF Revamp bundle
 
 on:
@@ -11,16 +10,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug workspace
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          pwd
+          ls -la
+
       - name: Zip vf-revamp-pages (rooted for WP upload)
         id: pages
         shell: bash
         run: |
-          set -e
-          if [ -d "wp-content/plugins/vf-revamp-pages" ]; then
-            cd wp-content/plugins
-            zip -r ../../../vf-revamp-pages.zip vf-revamp-pages -x "vf-revamp-pages/**/.*" >/dev/null
+          set -euo pipefail
+          OUT="$GITHUB_WORKSPACE/vf-revamp-pages.zip"
+          SRC="wp-content/plugins/vf-revamp-pages"
+          if [ -d "$SRC" ]; then
+            echo "Zipping $SRC -> $OUT"
+            zip -r "$OUT" "$SRC" -x "$SRC/**/.*"
+            echo "Zip created:"
+            ls -la "$OUT" || true
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
+            echo "Directory $SRC not found"
             echo "built=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -36,12 +46,16 @@ jobs:
         id: customizer
         shell: bash
         run: |
-          set -e
-          if [ -d "wp-content/plugins/vf-revamp-customizer" ]; then
-            cd wp-content/plugins
-            zip -r ../../../vf-revamp-customizer.zip vf-revamp-customizer -x "vf-revamp-customizer/**/.*" >/dev/null
+          set -euo pipefail
+          OUT="$GITHUB_WORKSPACE/vf-revamp-customizer.zip"
+          SRC="wp-content/plugins/vf-revamp-customizer"
+          if [ -d "$SRC" ]; then
+            echo "Zipping $SRC -> $OUT"
+            zip -r "$OUT" "$SRC" -x "$SRC/**/.*"
+            ls -la "$OUT" || true
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
+            echo "Directory $SRC not found"
             echo "built=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -57,12 +71,16 @@ jobs:
         id: extras
         shell: bash
         run: |
-          set -e
-          if [ -d "wp-content/plugins/vf-extras" ]; then
-            cd wp-content/plugins
-            zip -r ../../../vf-extras.zip vf-extras -x "vf-extras/**/.*" >/dev/null
+          set -euo pipefail
+          OUT="$GITHUB_WORKSPACE/vf-extras.zip"
+          SRC="wp-content/plugins/vf-extras"
+          if [ -d "$SRC" ]; then
+            echo "Zipping $SRC -> $OUT"
+            zip -r "$OUT" "$SRC" -x "$SRC/**/.*"
+            ls -la "$OUT" || true
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
+            echo "Directory $SRC not found"
             echo "built=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -73,3 +91,6 @@ jobs:
           name: vf-extras
           path: vf-extras.zip
           if-no-files-found: error
+
+      - name: Done
+        run: echo "Finished build"
