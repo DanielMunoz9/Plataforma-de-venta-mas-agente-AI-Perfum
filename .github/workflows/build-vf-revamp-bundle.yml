@@ -1,3 +1,4 @@
+
 name: Build VF Revamp bundle
 
 on:
@@ -10,14 +11,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Zip vf-revamp-pages
+      - name: Zip vf-revamp-pages (rooted for WP upload)
         id: pages
         shell: bash
         run: |
           set -e
-          DIR="wp-content/plugins/vf-revamp-pages"
-          if [ -d "$DIR" ]; then
-            zip -r vf-revamp-pages.zip "$DIR" -x "*/.*" >/dev/null
+          if [ -d "wp-content/plugins/vf-revamp-pages" ]; then
+            cd wp-content/plugins
+            zip -r ../../../vf-revamp-pages.zip vf-revamp-pages -x "vf-revamp-pages/**/.*" >/dev/null
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
             echo "built=false" >> "$GITHUB_OUTPUT"
@@ -31,14 +32,14 @@ jobs:
           path: vf-revamp-pages.zip
           if-no-files-found: error
 
-      - name: Zip vf-revamp-customizer
+      - name: Zip vf-revamp-customizer (rooted for WP upload)
         id: customizer
         shell: bash
         run: |
           set -e
-          DIR="wp-content/plugins/vf-revamp-customizer"
-          if [ -d "$DIR" ]; then
-            zip -r vf-revamp-customizer.zip "$DIR" -x "*/.*" >/dev/null
+          if [ -d "wp-content/plugins/vf-revamp-customizer" ]; then
+            cd wp-content/plugins
+            zip -r ../../../vf-revamp-customizer.zip vf-revamp-customizer -x "vf-revamp-customizer/**/.*" >/dev/null
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
             echo "built=false" >> "$GITHUB_OUTPUT"
@@ -52,14 +53,14 @@ jobs:
           path: vf-revamp-customizer.zip
           if-no-files-found: error
 
-      - name: Zip vf-extras
+      - name: Zip vf-extras (rooted for WP upload)
         id: extras
         shell: bash
         run: |
           set -e
-          DIR="wp-content/plugins/vf-extras"
-          if [ -d "$DIR" ]; then
-            zip -r vf-extras.zip "$DIR" -x "*/.*" >/dev/null
+          if [ -d "wp-content/plugins/vf-extras" ]; then
+            cd wp-content/plugins
+            zip -r ../../../vf-extras.zip vf-extras -x "vf-extras/**/.*" >/dev/null
             echo "built=true" >> "$GITHUB_OUTPUT"
           else
             echo "built=false" >> "$GITHUB_OUTPUT"
