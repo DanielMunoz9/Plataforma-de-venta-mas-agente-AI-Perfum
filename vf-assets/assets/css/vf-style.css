@@ -1,0 +1,272 @@
+/* Vane France Landing Page Styles */
+/* Using vf- prefix to avoid conflicts with existing styles */
+
+.vf-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.vf-hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.vf-hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.vf-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.vf-hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+    max-width: 600px;
+}
+
+.vf-hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: 'Playfair Display', serif;
+}
+
+.vf-hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-style: italic;
+}
+
+.vf-btn-primary {
+    background: linear-gradient(45deg, #d4af37, #f4d03f);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 50px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.vf-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.vf-section {
+    padding: 80px 0;
+}
+
+.vf-section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #1a1a1a;
+    font-family: 'Playfair Display', serif;
+}
+
+.vf-features {
+    background: #f8f9fa;
+}
+
+.vf-feature-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.vf-feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.vf-feature-icon {
+    font-size: 3rem;
+    color: #d4af37;
+    margin-bottom: 1rem;
+}
+
+.vf-feature-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.vf-feature-description {
+    color: #666;
+    line-height: 1.6;
+}
+
+.vf-video-section {
+    background: #1a1a1a;
+    color: white;
+}
+
+.vf-video-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.vf-video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.vf-video-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.vf-video-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.vf-video-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.vf-footer {
+    background: #1a1a1a;
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.vf-social-links {
+    margin-top: 20px;
+}
+
+.vf-social-link {
+    color: #d4af37;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.vf-social-link:hover {
+    color: #f4d03f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vf-hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .vf-hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .vf-section-title {
+        font-size: 2rem;
+    }
+    
+    .vf-feature-card {
+        padding: 30px;
+    }
+    
+    .vf-video-controls {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vf-hero-title {
+        font-size: 2rem;
+    }
+    
+    .vf-hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .vf-btn-primary {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+
+/* Animation classes */
+.vf-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.vf-fade-in.vf-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.vf-slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.6s ease;
+}
+
+.vf-slide-in-left.vf-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.vf-slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.6s ease;
+}
+
+.vf-slide-in-right.vf-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
